@@ -11,12 +11,20 @@ public class ProductRepository {
 	
 //	<Product> 적고, 마우스 갖다대서 import 해주기 - 다른 패키지에 있어서 import 해줘야한다.
 	private ArrayList<Product> listOfProducts = new ArrayList<Product>();
+	
+//	보통 static 하면 외부에서 접근해서 전체적으로 사용하려고 한다.
+//	그런데 private 붙여서 private static 을 해주면, 싱글톤 패턴으로 사용하는 것임.
+//	싱글톤 : 프로그램 상에서 단 하나의 객체만 생성하여 모두 공유하여 사용하는 방식, private 접근제한자를 사용하여 외부에서는 해당 클래스의 객체를 생성할 수 없도록 하고, 내부에서 해당 클래스의 객체를 생성하고 static으로 정적 멤버로 선언한 후 getter를 통해서 내부에서 선언된 객체만 공유하여 사용하는 방법
 	private static ProductRepository instance = new ProductRepository();
 	
+//	위에서 만든 ProductRepository 클래스 타입의 객체가 생성된다. 그런데 private 이라서 직접 접근은 못하고, static이라서 공유는 해놨다. 그래서 아래에서 static을 붙여서 static은 static 붙은 정적멤버끼리만 사용할 수 있으니까, 미리 만든 instance를 사용할 수 있다. 
+//	싱글톤 방식으로 생성된 ProductRepository 객체 instance를 공유
 	public static ProductRepository getInstance() {
 		return instance;
 	}
 	
+//	매개변수를 Product 클래스 타입인 배열을 생성해서 값을 추가 한다.
+//	상품 목록에 데이터를 추가
 	public void addProduct(Product product) {
 		listOfProducts.add(product);
 	}

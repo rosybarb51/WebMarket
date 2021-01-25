@@ -7,7 +7,7 @@
 <%@ page import="dao.ProductRepository" %>
 
 <!-- 추가2 -->
-<jsp:useBean id="productDAO" class="dao.ProductRepository" scope="session" />
+<%-- <jsp:useBean id="productDAO" class="dao.ProductRepository" scope="session" /> --%>
 
 <!-- 부트스트랩 사용 위한 css 파일 -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
@@ -33,13 +33,13 @@
 		</div>
 	</div>
 	<%
-	/* products.jsp 에서 get 방식으로 request 내장 객체에 데이터를 저자아여 전송 */
+	/* products.jsp 에서 get 방식으로 request 내장 객체에 데이터를 저장하여 전송 */
 	String id = request.getParameter("id");
 	/* getParameter로 받아온 id를 넣어서 getProductById(id)를 실행함 */
 	/* 매개 변수로 입력한 상품 id와 동이란 정보가 있을 경우 반환 */
-	Product product = productDAO.getProductById(id);
-	
+	/* 이미 만들어 놓은 객체를 가져와서 계속 사용할 수 있다. new 안 쓰고. */
 	ProductRepository dao = ProductRepository.getInstance();
+	Product product = dao.getProductById(id);
 	
 	%>
 	<div class="container">

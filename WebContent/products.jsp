@@ -11,7 +11,7 @@
 
 <!-- 액션태그 중에서 자바빈즈를 사용 : 자바빈즈 = 자바 클래스를 객체화 하는 것 - UI와 연산로직의 분리를 위해 사용함. -->
 <!-- 아래에서 유즈빈즈의 id에 해당하는 것이 객체명, class에 해당하는 것이 클래스명, scope에 해당하는 것이 해당 객체가 메모리 상에 살아있는 영역을 의미함. -->
-<jsp:useBean id="productDAO" class="dao.ProductRepository" scope="session" />
+<%-- <jsp:useBean id="productDAO" class="dao.ProductRepository" scope="session" /> --%>
 
 <!DOCTYPE html>
 <html>
@@ -43,14 +43,18 @@
 	<!-- Java의 배열(Array)은 크기가 설정되면 변경할 수 없지만, ArrayList는 크기를 동적으로 변경할 수 있음, 그래서 ArrayList가 개발할 때 편하다. -->
 	<!-- 대신, 속도는 Array가 ArrayList보다 더 빠르다. -->
 	<!-- 아래는 Product 클래스 타입으로 배열 생성함, 클래스 타입으로 배열을 만들면 배열 요소 하나 하나에 클래스 타입의 객체가 들어가야 함. -->
-	<%
-	/* 이것만 적으면 제품 정보를 다 자동으로 가져올 수 있게 ProductRepository에 다 적어줌, 가져온 것을 ArrayList의 <Product>타입으로 넣어줌.  */
-	ArrayList<Product> listOfProduct = productDAO.getAllProducts();
-	%>
+	
 	
 	<%
 		ProductRepository dao = ProductRepository.getInstance();
+
 		ArrayList<Product> listOfProducts = dao.getAllProducts();
+	%>
+	
+	<%
+
+	/* 이것만 적으면 제품 정보를 다 자동으로 가져올 수 있게 ProductRepository에 다 적어줌, 가져온 것을 ArrayList의 <Product>타입으로 넣어줌.  */
+	ArrayList<Product> listOfProduct = dao.getAllProducts();
 	%>
 	
 	<div class="container">

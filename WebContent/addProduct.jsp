@@ -15,6 +15,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" ></script>
 </head>
 <body>
+	<!-- 액션 태그 사용 -->
 	<jsp:include page="menu.jsp">
 	
 	<div class="jumbotron">
@@ -24,8 +25,10 @@
 	</div>
 	
 	<div class="container">
+		<!-- 데이터 넘기기 -->
 		<form name="newProduct" action="./processAddProduct.jsp" method="post" class="form-horizontal">
 			<div class="form-group row">
+				<!-- css 사용 하지 않고 부트 스트랩으로 화면 ui 사용 -->
 				<label class="col-sm-2">상품 코드</label>
 				<div class="col-sm-3">
 					<input type="text" name="productId" class="form-control">
@@ -70,7 +73,7 @@
 					<div class="col-sm-5">
 						<input type="radio" name="condition" value="New">신규 제품
 						<input type="radio" name="condition" value="Old">중고 제품
-						<input type="radio" ame="condition" value="Refurbished">재생 제품
+						<input type="radio" name="condition" value="Refurbished">재생 제품
 					</div>
 			</div>
 			<div class="form-group row">
@@ -81,6 +84,7 @@
 		</form>
 	</div>
 	
+	<!-- 액션 태그 사용 -->
 	<jsp:include page="footer.jsp">
 </body>
 </html>
