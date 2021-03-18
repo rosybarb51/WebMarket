@@ -3,6 +3,14 @@
     <!-- 디렉티브 태그의 import 사용해서 클래스 두 개 선언함 -->
 <%@ page import="dto.Product" %>
 <%@ page import="dao.ProductRepository" %>
+
+<!-- 파일 업로드용 라이브러리 추가  -->
+<%@ page import="java.io.*" %>
+<%@ page import="java.util.*" %>
+
+<%@ page import="com.oreilly.servlet.*" %>
+<%@ page import="com.oreilly.servlet.multipart.*" %>
+
 <!-- 
 dao : Data Acess Object 의 줄임말로써 데이터를 조작하기 위한 기능을 전담하기 위해서 만들어진 오브젝트
 dto : Data Transfer Object 의 줄임말로써 계층간의 데이터를 교환하기 위한 오브젝트 / DB(MySQL 같은..)와 자바의 데이터타입은 실제로는 같지 않음, 자바에서 DB의 데이터를 사용하기 위해서 데이터 변환을 하기 위한 클래스 객체
@@ -13,16 +21,24 @@ dto : Data Transfer Object 의 줄임말로써 계층간의 데이터를 교환�
 <%
 	
 	request.setCharacterEncoding("UTF-8");
+
+	String filename="";
+	String realFolder = "C:\\java102\\workspace-sts4\\WebMarket\\WebContent\\resource\\images";
+	int maxSize = 5 * 1024 * 1024;
+	String encType = "utf-8";
 	
-	/* request 내장 객체를 사용하여 넘겨받은 데이터를 하나씩 꺼냄 */
+	MultipartRequest multi = new MultipartRequest(request, realFolder, maxSize, encType, new DefaultFileRenamePolicy());
+
+	
+	/* MultipartRequest 내장 객체를 사용하여 넘겨받은 데이터를 하나씩 꺼냄 */
 	/* 클라이언트가 요청한... */
-	String productId = request.getParameter("productId");
-	String name = request.getParameter("name");
-	String unitPrice = request.getParameter("unitPrice");
-	String description = request.getParameter("manufacturer");
-	String category = request.getParameter("category");
-	String unitsInStock = request.getParameter("unitsInStock");
-	String condition = request.getParameter("condition");
+	String productId = multi.getParameter("productId");
+	String name = multi.getParameter("name");
+	String unitPrice = multi.getParameter("unitPrice");
+	String description = multi.getParameter("manufacturer");
+	String category = multi.getParameter("category");
+	String unitsInStock = multi.getParameter("unitsInStock");
+	String condition = multi.getParameter("condition");
 	
 	/* product.java 에서 int 로 선언했으니까 문자열로 받은 것을 아래와 같이 Integer로 바꿔준다. */
 	/* 넘겨받은 unitPrice가 문자열로 되어 있으며, 실제 데이터 타입은 Product.java의 unitPrice는 정수타입이므로 데이터 타입을 변경해야함 */
@@ -42,7 +58,13 @@ dto : Data Transfer Object 의 줄임말로써 계층간의 데이터를 교환�
 		stock = 0;
 	else
 		stock = Long.valueOf(unitsInStock);
-		
+	
+	/* MultipartRequest에 저장된 첨부 파일에 대한 정보를 읽어옴 */
+	Enumeration files = multi.getFileNames();
+	String fname = (String)files.nextElement();
+	String fileName = multi.getFilesystemName(fname);
+	
+	
 	/* ProductRepository 타입의 변수 dao에 싱글톤 방식으로 ProductRepository 클래스 내부에서 생성된 객체를 대입  */
 	ProductRepository dao = ProductRepository.getInstance();
 	
@@ -56,6 +78,8 @@ dto : Data Transfer Object 의 줄임말로써 계층간의 데이터를 교환�
 	newProduct.setCategory(category);
 	newProduct.setUnitsInStock(stock);
 	newProduct.setCondition(condition);
+	
+	newProduct.setFilename(filename);
 	
 	/* addProduct.jsp 에서 받아온 데이터를 데이터 세트를 하나 만든것을 매개변수로 만들어서 실행하는 것임 */
 	/* Product 클래스 타입의 데이터를 dao 객체를 통해서 상품 목록에 저장ㅇ */

@@ -22,13 +22,13 @@ public class Product implements Serializable {
 	private String description;		// 상품 설명
 	private String manufacturer;	// 제조자
 	private String category;		// 분류
+	
 	private long unitsInStock;		// 재고 수
 	private String condition;		// 신상품/중고품/재생품
 	
+	private String filename;		// 첨부 이미지 파일명
+	
 
-	public String getProductId() {
-		return productId;
-	}
 //		alt + shift + s 단축키 눌러서 나오는 것 중에 generate getter/setter 로 생성해줬다.
 		public void setProductId(String productId) {
 			this.productId = productId;
@@ -90,7 +90,16 @@ public class Product implements Serializable {
 			this.condition = condition;
 		}
 
-
+		public String getFilename() {
+			return filename;
+		}
+		public void setFilename(String filename) {
+			this.filename = filename;
+		}
+		
+		public String getProductId() {
+			return productId;
+		}
 		
 //		기본 생성자
 		public Product() {

@@ -71,7 +71,8 @@
 				
 			%>
 			<div class="col-md-4">
-			<!-- 표현식 출력..? -->
+				<!-- 이미지 출력 -->
+				<img src="./resource/images/<%=product.getFilename() %>" style="width:100%;">
 				<h3><%= product.getPname() %></h3>
 				<h3><%= product.getDescription() %></h3>
 				<h3><%= product.getUnitPrice() %>원</h3>
